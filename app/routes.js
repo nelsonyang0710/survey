@@ -1,35 +1,10 @@
- // app/routes.js
+// app/routes.js
+var expressJwt = require('express-jwt');
+var config = require('config.json');
+module.exports = function (app) {
+    app.use('/api',expressJwt({secret:config.secret}).unless({path:['/api/users/authenticate']}));
 
-// grab the nerd model we just created
-var Users     = require('./models/user');
-
-    module.exports = function(app) {
-
-        // server routes ===========================================================
-        // handle things like api calls
-        // authentication routes
-
-        // sample api route
-        app.get('/api/users', function(req, res) {
-            // use mongoose to get all nerds in the database
-            Users.find(function(err, users) {
-
-                // if there is an error retrieving, send the error.
-                                // nothing after res.send(err) will execute
-                if (err)
-                    res.send(err);
-
-                res.json(users); // return all nerds in JSON format
-            });
-        });
-
-        // route to handle creating goes here (app.post)
-        // route to handle delete goes here (app.delete)
-
-        // frontend routes =========================================================
-        // route to handle all angular requests
-        app.get('*', function(req, res) {
-            res.sendfile('./public/views/index.html'); // load our public/index.html file
-        });
-
-    };
+    //route
+    app.use('/',require('./controller/main.controller'));
+    //app.use('/api',require('./controller/api.controller'));
+};

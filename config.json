@@ -1,0 +1,5 @@
+{
+    "dbConnectionUrl": "mongodb://localhost/portfolio",
+    "apiUrl":  "http://localhost:8080/api",
+    "secret": "passwordString"
+}

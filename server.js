@@ -1,19 +1,17 @@
-// 
-// Copyrights (c) 2011-2016, TalentCircles, Inc.
 // server.js
 
 // modules =================================================
+require('rootpath')();
 var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-
+var session = require('express-session');
 // configuration ===========================================
 
 // config files
-var mongoose = require('mongoose');
-var dbConfig = require('./config/db')
-mongoose.connect(dbConfig.url);
+var config = require('config.json')
+
 // set our port
 var port = process.env.PORT || 8080;
 
@@ -23,6 +21,10 @@ var port = process.env.PORT || 8080;
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json
+
+app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/app/views');
 app.use(bodyParser.json());
 
 // parse application/vnd.api+json as json
@@ -38,14 +40,11 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 
 // routes ==================================================
-require('./app/routes')(app); // configure our routes
+require('app/routes')(app); // configure our routes
 
 // start app ===============================================
 // startup our app at http://localhost:8080
 app.listen(port);
-
-// shoutout to the user
-console.log('Magic happens on port ' + port);
 
 // expose app
 exports = module.exports = app;
