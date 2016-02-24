@@ -3,5 +3,6 @@
 
 var config = require('config.json');
 var mongoose = require('mongoose');
-
+var service = {};
 mongoose.connect(config.dbConnectionUrl);
+module.exports = service;
