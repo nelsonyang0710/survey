@@ -43,8 +43,14 @@ app.use(express.static(__dirname + '/public'));
 require('app/routes')(app); // configure our routes
 
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).send('invalid token...');
+    }
+    else {
+        console.error(err.stack);
+        res.status(500).send('Something broke!');
+    }
+
 });
 // start app ===============================================
 // startup our app at http://localhost:8080
