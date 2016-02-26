@@ -1,0 +1,66 @@
+/* main.css */
+/* Copyrights (c) 2011-2016, TalentCircles, Inc. */
+
+h1{
+	color: #777;
+	margin:0;
+	font-size: 22px;
+	padding: 13px 5px;
+}
+.buttons-wrapper
+{
+	padding: 15px 0;
+}
+h2{
+	display: inline-block;
+	font-size: 20px;
+	margin: 0;
+	padding:6px 0;
+}
+h2.form-signin-heading
+{
+	margin: 10px 0;
+}
+h3{
+	font-size: 16px;
+}
+#logout-button{
+	margin:8px;
+}
+form.form-signin, form.spoofing {
+	max-width: 330px;
+	padding: 15px;
+	margin: 80px auto;
+}
+form.form-signin input.form-control,
+form.spoofing input.form-control{
+	margin-bottom: 10px;
+}
+form .form-section{
+	padding: 22px 5px 22px 0;
+	background-color: #f3f3f3;
+	margin-top: 7px;
+	border-radius: 4px;
+}
+form .buttons-wrapper .btn
+{
+	margin-left: 10px;
+}
+
+form fieldset.bordered {
+	border: 1px groove #ddd !important;
+	padding: 1.4em 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow:  0px 0px 0px 0px #000;
+	box-shadow:  0px 0px 0px 0px #000;
+}
+
+form fieldset.bordered legend {
+	font-size: 1em !important;
+	font-weight: bold !important;
+	text-align: left !important;
+	width:inherit; /* Or auto */
+	padding:0 10px; /* To give a bit of padding on the left and right */
+	border-bottom:none;
+	margin-bottom: 0;
+}
