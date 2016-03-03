@@ -10,8 +10,8 @@ angular.module('AuthorizationService', []).factory('Authorization', ['$http', fu
 
                 // these will work when more API routes are defined on the Node side of things
         // call to POST and create a new nerd
-        create : function(nerdData) {
-            return $http.post('/api/nerds', nerdData);
+        create : function(data) {
+            return $http.post('/api/register', data);
         },
 
         // call to DELETE a nerd

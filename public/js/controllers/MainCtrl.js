@@ -19,6 +19,9 @@ angular.module('MainCtrl', ['ui.bootstrap']).controller('MainController', ['$sco
                     title: 'login',
                     linkText: 'Login'
                 }, {
+                    title: 'register',
+                    linkText: 'Register'
+                }, {
                     title: 'sample',
                     linkText: 'Sample'
                 }];

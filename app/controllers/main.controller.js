@@ -10,4 +10,7 @@ router.get('/', function (req, res) {
 router.get('/login', function (req, res) {
     res.render('main');
 });
+router.get('/register', function (req, res) {
+    res.render('main');
+});
 module.exports = router;
