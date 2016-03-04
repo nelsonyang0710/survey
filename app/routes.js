@@ -2,11 +2,11 @@
 var expressJwt = require('express-jwt');
 var config = require('config.json');
 module.exports = function (app) {
-    app.use('/api',expressJwt({secret:config.secret}).unless({ path: ['/api/authenticate','/api/register']}));
+    app.use('/api',expressJwt({secret:config.secret}).unless({ path: ['/api/users/authenticate','/api/users/register']}));
 
     //route
     app.use('/',require('app/controllers/main.controller'));
-    app.use('/api', require('app/controllers/api.controller'));
+    app.use('/api/users', require('app/controllers/api/users.controller'));
     app.get('*', function(req, res){
         res.status(404);
 

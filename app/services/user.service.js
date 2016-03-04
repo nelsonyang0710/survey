@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 mongoose.connect(config.dbConnectionUrl);
 
 var userSchema = mongoose.Schema({
-    name: String
+    username: {type: String, unique: true},
+    hash: String
 })
 var User = mongoose.model('User', userSchema);
 var _ = require('lodash');
@@ -16,12 +17,13 @@ var Q = require('q');
 var service = {};
 
 service.authenticate = authenticate;
+service.create = create;
 module.exports = service;
 
 function authenticate(username, password) {
     var deferred = Q.defer();
 
-    User.findOne({name: username }, function (err, user) {
+    User.findOne({username: username }, function (err, user) {
         if (err) deferred.reject(err);
 
         if (user && bcrypt.compareSync(password, user.hash)) {
@@ -32,6 +34,44 @@ function authenticate(username, password) {
             deferred.resolve();
         }
     });
+
+    return deferred.promise;
+}
+
+function create(userParam) {
+    var deferred = Q.defer();
+
+    // validation
+    User.findOne(
+        {username: userParam.username},
+        function (err, user) {
+            if (err) deferred.reject(err);
+
+            if (user) {
+                // username already exists
+                deferred.reject('Username "' + userParam.username + '" is already taken');
+            } else {
+                createUser();
+            }
+        });
+
+    function createUser() {
+        // set user object to userParam without the cleartext password
+        var user = _.omit(userParam, 'password');
+
+        // add hashed password to user object
+        user.hash = bcrypt.hashSync(userParam.password, 10);
+
+        var newUser = new User(user);
+        newUser.save(function(err)
+        {
+            if (err)
+            {
+                deferred.reject(err);
+            }
+            deferred.resolve();
+        })
+    }
 
     return deferred.promise;
 }
