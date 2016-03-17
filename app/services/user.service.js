@@ -18,6 +18,7 @@ var service = {};
 
 service.authenticate = authenticate;
 service.create = create;
+service.getById = getById;
 module.exports = service;
 
 function authenticate(username, password) {
@@ -55,23 +56,22 @@ function create(userParam) {
             }
         });
 
-    function createUser() {
-        // set user object to userParam without the cleartext password
-        var user = _.omit(userParam, 'password');
+    return deferred.promise;
+}
+function getById(id) {
+    var deferred = Q.defer();
 
-        // add hashed password to user object
-        user.hash = bcrypt.hashSync(userParam.password, 10);
+    User.findById(id, function (err, user) {
+        if (err) deferred.reject(err);
 
-        var newUser = new User(user);
-        newUser.save(function(err)
-        {
-            if (err)
-            {
-                deferred.reject(err);
-            }
+        if (user) {
+            // return user (without hashed password)
+            deferred.resolve(user.username);
+        } else {
+            // user not found
             deferred.resolve();
-        })
-    }
+        }
+    });
 
     return deferred.promise;
 }

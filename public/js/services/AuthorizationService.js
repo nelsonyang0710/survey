@@ -3,7 +3,9 @@ angular.module('AuthorizationService', []).factory('Authorization', ['$http', fu
 
     return {
         get : function() {
-            return $http.get('/api/nerds');
+            return $http.get('/api/users/currentUser', {headers:{
+                'Authorization': 'Bearer ' + window.jwtToken
+            }});
         },
         create : function(data) {
             return $http.post('/api/users/register', data);

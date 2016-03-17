@@ -8,6 +8,7 @@
     "express": "~4.13.4",
     "express-jwt": "^3.3.0",
     "express-session": "^1.13.0",
+    "express-unless": "^0.3.0",
     "jsonwebtoken": "^5.7.0",
     "kerberos": "0.0.18",
     "lodash": "^4.5.1",

@@ -1,8 +1,11 @@
 // app/routes.js
-var expressJwt = require('express-jwt');
+var jwt = require('express-jwt');
 var config = require('config.json');
+var unless = require('express-unless')
+var session = require('express-session');
 module.exports = function (app) {
-    app.use('/api',expressJwt({secret:config.secret}).unless({ path: ['/api/users/authenticate','/api/users/register']}));
+    app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
+    app.use('/api',jwt({secret:config.secret}).unless({ path: ['/api/users/authenticate','/api/users/register','/api/users/token']}));
 
     //route
     app.use('/',require('app/controllers/main.controller'));
