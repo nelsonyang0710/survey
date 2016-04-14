@@ -1,5 +1,5 @@
 {
-    "dbConnectionUrl": "mongodb://localhost/portfolio",
+    "dbConnectionUrl": "mongodb://localhost/TalentCatch",
     "apiUrl":  "http://localhost:8080/api",
     "secret": "passwordString"
 }

@@ -52,12 +52,25 @@ function create(userParam) {
                 // username already exists
                 deferred.reject('Username "' + userParam.username + '" is already taken');
             } else {
-                createUser();
+                var user = _.omit(userParam, 'password');
+                user.hash = bcrypt.hashSync(userParam.password, 10);
+                user = new User(user);
+                user.save(function (err, fluffy) {
+                    if (err)
+                    {
+                        deferred.reject('Error while creating user.');
+                    }
+                    else
+                    {
+                        deferred.resolve('done.');
+                    }
+                });
             }
         });
 
     return deferred.promise;
 }
+
 function getById(id) {
     var deferred = Q.defer();
 
